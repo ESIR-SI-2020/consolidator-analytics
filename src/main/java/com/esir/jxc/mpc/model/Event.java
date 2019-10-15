@@ -1,16 +1,20 @@
 package com.esir.jxc.mpc.model;
 
+import com.esir.jxc.mpc.model.event.EventUserCreated;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.Data;
 
+@Data
 public class Event {
-    private String name;
-//    private  String metadata;
-//
-    public String getName() {
-        return name;
-    }
+    private String eventName;
+    private ObjectNode body;
 
-    public void setName(String name) {
-        this.name = name;
+    public EventUserCreated toEventUserCreated() {
+        EventUserCreated eventUserCreated = new EventUserCreated();
+        eventUserCreated.setEmail(this.getBody().get("email").textValue());
+        eventUserCreated.setPassword(this.getBody().get("password").textValue());
+        eventUserCreated.setUsername(this.getBody().get("username").textValue());
+        return eventUserCreated;
     }
 
 }

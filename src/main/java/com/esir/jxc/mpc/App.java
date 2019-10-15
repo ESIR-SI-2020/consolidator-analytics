@@ -1,8 +1,7 @@
 package com.esir.jxc.mpc;
 
-import com.esir.jxc.mpc.model.UserAdd;
+import com.esir.jxc.mpc.model.UserAdded;
 import com.esir.jxc.mpc.repository.UserRepository;
-import com.esir.jxc.mpc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,8 +14,6 @@ import java.util.List;
 @SpringBootApplication
 public class App {
     @Autowired
-    UserService userService;
-    @Autowired
     UserRepository userRepository;
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
@@ -25,10 +22,10 @@ public class App {
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
-            UserAdd user = new UserAdd();
+            UserAdded user = new UserAdded();
 //            userService.addUser(user);
 //            System.out.println("user added");
-            List<UserAdd> users = userRepository.findAll().getContent();
+            List<UserAdded> users = userRepository.findAll().getContent();
             System.out.println(users);
 
         };
