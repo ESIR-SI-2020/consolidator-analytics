@@ -16,7 +16,7 @@ public class EventRouting {
     UserRepository userRepository;
 
     public void processEvent(Event event) {
-        if(event.getName().equals("add")) {
+        if(event.getName().equals("USER_ADDED")) {
             LocalDateTime now = LocalDateTime.now();
             Calendar cal = Calendar.getInstance();
             cal.set(now.getYear(), now.getMonthValue(), now.getDayOfMonth());

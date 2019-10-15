@@ -1,5 +1,6 @@
 package com.esir.jxc.mpc;
 
+import com.esir.jxc.mpc.model.Event;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.MockConsumer;
@@ -16,7 +17,7 @@ public class ConsumerKafka {
     public void read() {
         TopicPartition topic = new TopicPartition(TOPIC, 0);
 
-        MockConsumer<Long, String> consumer = new MockConsumer<Long, String>(OffsetResetStrategy.EARLIEST);
+        MockConsumer<String, Event> consumer = new MockConsumer<>(OffsetResetStrategy.EARLIEST);
         consumer.assign(Collections.singletonList(topic));
 
         HashMap<TopicPartition, Long> beginningOffsets = new HashMap<>();
@@ -25,7 +26,7 @@ public class ConsumerKafka {
 
 //        consumer.addRecord(new ConsumerRecord<>(TOPIC, 0, 0, 4141L, "test"));
         while(true) {
-            ConsumerRecords<Long, String> records = consumer.poll(Duration.ofMillis(1000L));
+            ConsumerRecords<String, Event> records = consumer.poll(Duration.ofMillis(1000L));
             System.out.println("count: " + records.count());
             records.forEach(record -> System.out.println(record.value()));
         }
