@@ -1,26 +1,28 @@
-import model.Event;
-import org.elasticsearch.common.inject.Inject;
+package com.esir.jxc.mpc;
+
+import com.esir.jxc.mpc.model.Event;
+import com.esir.jxc.mpc.model.UserAdd;
+import com.esir.jxc.mpc.repository.UserRepository;
+import com.esir.jxc.mpc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
-import service.AnalyticsService;
-import service.UsersByDayService;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Date;
 
 @Component
 public class EventRouting {
     @Autowired
-    UsersByDayService usersByDayService;
+    UserRepository userRepository;
 
     public void processEvent(Event event) {
-        if(event.getName() == "add") {
+        if(event.getName().equals("add")) {
             LocalDateTime now = LocalDateTime.now();
             Calendar cal = Calendar.getInstance();
             cal.set(now.getYear(), now.getMonthValue(), now.getDayOfMonth());
-            usersByDayService.addUser(cal.getTime());
+            UserAdd user = new UserAdd();
+            user.setCreationDate(cal.getTime());
+            userRepository.save(user);
         }
     }
 }
