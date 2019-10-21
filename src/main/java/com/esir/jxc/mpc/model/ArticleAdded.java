@@ -12,5 +12,6 @@ public class ArticleAdded {
     @Id
     private String id;
     private Date creationDate;
+    private String url;
 
 }
