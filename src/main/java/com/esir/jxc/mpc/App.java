@@ -25,11 +25,7 @@ public class App {
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
-            UserAdd user = new UserAdd();
-//            userService.addUser(user);
-//            System.out.println("user added");
-            List<UserAdd> users = userRepository.findAll().getContent();
-            System.out.println(users);
+            System.out.println("Application starting...");
 
         };
     }

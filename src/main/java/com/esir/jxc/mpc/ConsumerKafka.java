@@ -1,35 +1,24 @@
 package com.esir.jxc.mpc;
 
 import com.esir.jxc.mpc.model.Event;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.MockConsumer;
-import org.apache.kafka.clients.consumer.OffsetResetStrategy;
-import org.apache.kafka.common.TopicPartition;
+import org.apache.kafka.clients.producer.Producer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.util.Collections;
-import java.util.HashMap;
+import java.io.IOException;
 
+@Service
 public class ConsumerKafka {
-    public static String TOPIC = "user";
 
-    public void read() {
-        TopicPartition topic = new TopicPartition(TOPIC, 0);
+    @Autowired EventRouting eventRouting;
+    private final Logger logger = LoggerFactory.getLogger(Producer.class);
 
-        MockConsumer<String, Event> consumer = new MockConsumer<>(OffsetResetStrategy.EARLIEST);
-        consumer.assign(Collections.singletonList(topic));
-
-        HashMap<TopicPartition, Long> beginningOffsets = new HashMap<>();
-        beginningOffsets.put(topic, 0L);
-        consumer.updateBeginningOffsets(beginningOffsets);
-
-//        consumer.addRecord(new ConsumerRecord<>(TOPIC, 0, 0, 4141L, "test"));
-        while(true) {
-            ConsumerRecords<String, Event> records = consumer.poll(Duration.ofMillis(1000L));
-            System.out.println("count: " + records.count());
-            records.forEach(record -> System.out.println(record.value()));
-        }
-
+    @KafkaListener(topics = "users", groupId = "esir2019")
+    public void consume(Event event) throws IOException {
+        logger.info(String.format("#### -> Consumed message -> %s", event.getName()));
+        eventRouting.processEvent(event);
     }
 }
