@@ -1,28 +1,42 @@
 package com.esir.jxc.mpc;
 
 import com.esir.jxc.mpc.model.Event;
-import com.esir.jxc.mpc.model.UserAdd;
-import com.esir.jxc.mpc.repository.UserRepository;
-import com.esir.jxc.mpc.service.UserService;
+import com.esir.jxc.mpc.model.UserAdded;
+import com.esir.jxc.mpc.model.ArticleAdded;
+import com.esir.jxc.mpc.repository.ArticleAddedRepository;
+import com.esir.jxc.mpc.repository.UserAddedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Date;
 
 @Component
 public class EventRouting {
     @Autowired
-    UserRepository userRepository;
+    UserAddedRepository userAddedRepository;
+    @Autowired
+    ArticleAddedRepository articleAddedRepository;
 
     public void processEvent(Event event) {
-        if(event.getName().equals("USER_ADDED")) {
-            LocalDateTime now = LocalDateTime.now();
-            Calendar cal = Calendar.getInstance();
-            cal.set(now.getYear(), now.getMonthValue(), now.getDayOfMonth());
-            UserAdd user = new UserAdd();
-            user.setCreationDate(cal.getTime());
-            userRepository.save(user);
+        if (event.getEventName().equals("USER_ADDED")) {
+            UserAdded userAdded = new UserAdded();
+            userAdded.setCreationDate(getDate());
+            userAddedRepository.save(userAdded);
         }
+
+        else if (event.getEventName().equals("ARTICLE_ADDED")) {
+            ArticleAdded articleAdded = new ArticleAdded();
+            articleAdded.setCreationDate(getDate());
+            articleAddedRepository.save(articleAdded);
+        }
+    }
+
+    private Date getDate(){
+        LocalDateTime now = LocalDateTime.now();
+        Calendar cal = Calendar.getInstance();
+        cal.set(now.getYear(), now.getMonthValue(), now.getDayOfMonth());
+        return cal.getTime();
     }
 }

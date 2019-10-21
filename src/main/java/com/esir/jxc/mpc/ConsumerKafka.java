@@ -18,7 +18,7 @@ public class ConsumerKafka {
 
     @KafkaListener(topics = "users", groupId = "esir2019")
     public void consume(Event event) throws IOException {
-        logger.info(String.format("#### -> Consumed message -> %s", event.getName()));
+        logger.info(String.format("#### -> Consumed message -> %s", event.getEventName()));
         eventRouting.processEvent(event);
     }
 }
