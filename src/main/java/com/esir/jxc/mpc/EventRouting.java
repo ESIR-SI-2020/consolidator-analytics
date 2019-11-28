@@ -6,12 +6,14 @@ import com.esir.jxc.mpc.model.ArticleAdded;
 import com.esir.jxc.mpc.model.event.ArticleCreated;
 import com.esir.jxc.mpc.repository.ArticleAddedRepository;
 import com.esir.jxc.mpc.repository.UserAddedRepository;
+import com.esir.jxc.mpc.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class EventRouting {
@@ -23,7 +25,7 @@ public class EventRouting {
 
     public void processEvent(Event event) {
         if (event.getEventName().equals("USER_ADDED")) {
-            UserAdded userAdded = new UserAdded(getDate());
+            UserAdded userAdded = new UserAdded(UUID.randomUUID().toString(), DateUtils.getDate());
             userAddedRepository.save(userAdded);
         }
 
@@ -34,12 +36,5 @@ public class EventRouting {
             articleAdded.setUrl(eventArticleCreated.getUrl());
             articleAddedRepository.save(articleAdded);
         }
-    }
-
-    private Date getDate() {
-        LocalDateTime now = LocalDateTime.now();
-        Calendar cal = Calendar.getInstance();
-        cal.set(now.getYear(), now.getMonthValue(), now.getDayOfMonth());
-        return cal.getTime();
     }
 }

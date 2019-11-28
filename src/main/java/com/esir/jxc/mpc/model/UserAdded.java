@@ -14,7 +14,4 @@ public class UserAdded {
     @Id
     private String id;
     private Date creationDate;
-
-    public UserAdded(Date date) {
-    }
 }
