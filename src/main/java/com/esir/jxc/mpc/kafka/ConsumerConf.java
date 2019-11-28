@@ -1,6 +1,5 @@
 package com.esir.jxc.mpc.kafka;
 
-
 import java.util.HashMap;
 import java.util.Map;
 

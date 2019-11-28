@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserAddedRepository extends ElasticsearchRepository<UserAdded, String> {
     Page<UserAdded> findAll();
-//     UserAdded findByCreationDate(Date creationDate);
 }
 
 
