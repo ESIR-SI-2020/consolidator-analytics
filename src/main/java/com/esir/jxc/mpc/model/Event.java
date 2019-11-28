@@ -1,6 +1,5 @@
 package com.esir.jxc.mpc.model;
 
-import com.esir.jxc.mpc.model.event.UserCreated;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Data;
 
