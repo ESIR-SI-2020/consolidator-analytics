@@ -16,5 +16,4 @@ public class Event {
         eventUserCreated.setUsername(this.getBody().get("username").textValue());
         return eventUserCreated;
     }
-
 }
