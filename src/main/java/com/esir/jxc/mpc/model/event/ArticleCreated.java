@@ -17,7 +17,7 @@ public class ArticleCreated {
     public static ArticleCreated of(Event event) {
 
         ArticleCreated articleCreated =
-                new ArticleCreated(event.getId(), event.getMetadata().get("url").asText(),
+                new ArticleCreated(event.getId(), event.getMetadata().get("articleUrl").asText(),
                         event.getMetadata().get("email").asText());
 
         return articleCreated;
