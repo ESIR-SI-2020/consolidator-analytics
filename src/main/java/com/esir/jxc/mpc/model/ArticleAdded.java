@@ -15,5 +15,6 @@ public class ArticleAdded {
     private String id;
     private Date creationDate;
     private String url;
+    private String email;
 
 }

@@ -29,7 +29,8 @@ public class EventRouting {
         else if (event.getType().equals("ARTICLE_ADDED")) {
             ArticleCreated articleCreated = ArticleCreated.of(event);
             ArticleAdded articleAdded =
-                    new ArticleAdded(UUID.randomUUID().toString(), DateUtils.getDate(), articleCreated.getUrl());
+                    new ArticleAdded(UUID.randomUUID().toString(), DateUtils.getDate(), articleCreated.getUrl(),
+                            articleCreated.getEmail());
             articleAddedRepository.save(articleAdded);
         }
     }
