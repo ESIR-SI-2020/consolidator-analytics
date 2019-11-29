@@ -21,7 +21,7 @@ public class ConsumerKafka {
 
     @KafkaListener(topics = "users", containerFactory = "kafkaListenerContainerFactory")
     public void consume(@Payload Event event) throws IOException {
-        logger.debug(String.format("Consumed message -> %s", event.getEventName()));
+        logger.debug(String.format("Consumed message -> %s", event.getType()));
         eventRouting.processEvent(event);
     }
 }

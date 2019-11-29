@@ -16,7 +16,7 @@ public class ArticleCreated {
     public static ArticleCreated of(Event event) {
 
         ArticleCreated articleCreated =
-                new ArticleCreated(UUID.randomUUID().toString(), event.getBody().get("url").asText());
+                new ArticleCreated(UUID.randomUUID().toString(), event.getMetadata().get("url").asText());
 
         return articleCreated;
     }

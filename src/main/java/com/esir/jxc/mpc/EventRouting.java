@@ -21,12 +21,12 @@ public class EventRouting {
     ArticleAddedRepository articleAddedRepository;
 
     public void processEvent(Event event) {
-        if (event.getEventName().equals("USER_ADDED")) {
+        if (event.getType().equals("USER_ADDED")) {
             UserAdded userAdded = new UserAdded(UUID.randomUUID().toString(), DateUtils.getDate());
             userAddedRepository.save(userAdded);
         }
 
-        else if (event.getEventName().equals("ARTICLE_ADDED")) {
+        else if (event.getType().equals("ARTICLE_ADDED")) {
             ArticleCreated articleCreated = ArticleCreated.of(event);
             ArticleAdded articleAdded =
                     new ArticleAdded(UUID.randomUUID().toString(), DateUtils.getDate(), articleCreated.getUrl());
