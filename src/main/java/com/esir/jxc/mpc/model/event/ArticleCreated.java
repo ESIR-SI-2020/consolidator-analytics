@@ -4,8 +4,6 @@ import com.esir.jxc.mpc.model.Event;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
 @AllArgsConstructor
 public class ArticleCreated {
@@ -16,10 +14,7 @@ public class ArticleCreated {
 
     public static ArticleCreated of(Event event) {
 
-        ArticleCreated articleCreated =
-                new ArticleCreated(event.getId(), event.getMetadata().get("url").asText(),
-                        event.getMetadata().get("email").asText());
-
-        return articleCreated;
+        return new ArticleCreated(event.getId(), event.getMetadata().get("url").asText(),
+                event.getMetadata().get("email").asText());
     }
 }

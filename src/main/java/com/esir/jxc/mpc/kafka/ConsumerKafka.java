@@ -10,8 +10,6 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-
 @Service
 public class ConsumerKafka {
 
@@ -20,7 +18,7 @@ public class ConsumerKafka {
     private final Logger logger = LoggerFactory.getLogger(Producer.class);
 
     @KafkaListener(topics = "users", containerFactory = "kafkaListenerContainerFactory")
-    public void consume(@Payload Event event) throws IOException {
+    public void consume(@Payload Event event) {
         logger.debug(String.format("Consumed message -> %s", event.getType()));
         eventRouting.processEvent(event);
     }
