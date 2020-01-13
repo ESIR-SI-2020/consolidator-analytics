@@ -1,5 +1,6 @@
 package com.esir.jxc.mpc.utils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,5 +13,4 @@ public class DateUtils {
         cal.set(now.getYear(), now.getMonthValue(), now.getDayOfMonth() - 1);
         return cal.getTime();
     }
-
 }

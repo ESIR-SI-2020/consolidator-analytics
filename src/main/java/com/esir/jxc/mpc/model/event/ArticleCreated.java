@@ -1,6 +1,6 @@
 package com.esir.jxc.mpc.model.event;
 
-import com.esir.jxc.mpc.model.Event;
+import fr.esir.jxc.domain.events.Event;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,7 +14,10 @@ public class ArticleCreated {
 
     public static ArticleCreated of(Event event) {
 
-        return new ArticleCreated(event.getId(), event.getMetadata().get("url").asText(),
-                event.getMetadata().get("email").asText());
+        ArticleCreated articleCreated =
+                new ArticleCreated(event.getId(), event.getMetadata().get("articleUrl").asText(),
+                        event.getMetadata().get("email").asText());
+
+        return articleCreated;
     }
 }
