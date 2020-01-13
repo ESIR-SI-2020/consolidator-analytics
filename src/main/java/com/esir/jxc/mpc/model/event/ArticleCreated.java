@@ -1,6 +1,6 @@
 package com.esir.jxc.mpc.model.event;
 
-import com.esir.jxc.mpc.model.Event;
+import fr.esir.jxc.domain.events.Event;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
