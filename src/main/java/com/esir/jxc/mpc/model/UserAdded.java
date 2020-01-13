@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -13,5 +14,5 @@ import java.util.Date;
 public class UserAdded {
     @Id
     private String id;
-    private Date creationDate;
+    private LocalDate creationDate;
 }

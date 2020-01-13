@@ -21,17 +21,27 @@ public class EventRouting {
     ArticleAddedRepository articleAddedRepository;
 
     public void processEvent(Event event) {
-        if (event.getType().equals("USER_ADDED")) {
-            UserAdded userAdded = new UserAdded(UUID.randomUUID().toString(), DateUtils.getDate());
-            userAddedRepository.save(userAdded);
-        }
 
-        else if (event.getType().equals("ARTICLE_ADDED")) {
-            ArticleCreated articleCreated = ArticleCreated.of(event);
-            ArticleAdded articleAdded =
-                    new ArticleAdded(UUID.randomUUID().toString(), DateUtils.getDate(), articleCreated.getUrl(),
-                            articleCreated.getEmail());
-            articleAddedRepository.save(articleAdded);
+        switch (event.getType()) {
+            case "USER_ADDED":
+                onUserAdded();
+                break;
+            case "ARTICLE_ADDED":
+                onArticleAdded(event);
+                break;
         }
+    }
+
+    private void onUserAdded() {
+        UserAdded userAdded = new UserAdded(UUID.randomUUID().toString(), DateUtils.getDate());
+        userAddedRepository.save(userAdded);
+    }
+
+    private void onArticleAdded(Event event) {
+        ArticleCreated articleCreated = ArticleCreated.of(event);
+        ArticleAdded articleAdded =
+                new ArticleAdded(UUID.randomUUID().toString(), DateUtils.getDate(), articleCreated.getUrl(),
+                        articleCreated.getEmail());
+        articleAddedRepository.save(articleAdded);
     }
 }

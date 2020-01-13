@@ -33,17 +33,17 @@ public class Config {
 
     @Bean
     public Client client() {
-        Client client = null;
+        Client client;
         try {
             final Settings elasticsearchSettings = Settings.builder()
                     .put("path.home", host)
                     .put("cluster.name", clusterName).build();
             TransportClient transportClient = new PreBuiltTransportClient(elasticsearchSettings);
-            client = transportClient.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(host), port));
+            return transportClient.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(host), port));
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        return client;
+        return null;
     }
 
     @Bean
