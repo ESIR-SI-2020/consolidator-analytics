@@ -19,6 +19,8 @@ public class ArticleCreated {
                         event.getMetadata().get("email").asText());
 
 
+
+
         return articleCreated;
     }
 }
