@@ -17,6 +17,7 @@ public class ArticleCreated {
         ArticleCreated articleCreated =
                 new ArticleCreated(event.getId(), event.getMetadata().get("articleUrl").asText(),
                         event.getMetadata().get("email").asText());
+
         return articleCreated;
     }
 }
