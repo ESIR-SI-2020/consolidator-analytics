@@ -3,7 +3,7 @@ package com.esir.jxc.mpc.kafka;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.esir.jxc.mpc.model.Event;
+import fr.esir.jxc.domain.events.Event;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;

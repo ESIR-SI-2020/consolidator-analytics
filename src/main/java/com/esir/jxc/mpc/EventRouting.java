@@ -1,12 +1,12 @@
 package com.esir.jxc.mpc;
 
-import com.esir.jxc.mpc.model.ArticleAdded;
-import com.esir.jxc.mpc.model.Event;
-import com.esir.jxc.mpc.model.UserAdded;
 import com.esir.jxc.mpc.model.event.ArticleCreated;
-import com.esir.jxc.mpc.repository.ArticleAddedRepository;
-import com.esir.jxc.mpc.repository.UserAddedRepository;
 import com.esir.jxc.mpc.utils.DateUtils;
+import fr.esir.jxc.domain.events.Event;
+import fr.esir.jxc.domain.models.analytics.ArticleAdded;
+import fr.esir.jxc.domain.models.analytics.UserAdded;
+import fr.esir.jxc.elasticsearch.repositories.ArticleAddedRepository;
+import fr.esir.jxc.elasticsearch.repositories.UserAddedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,17 +21,27 @@ public class EventRouting {
     ArticleAddedRepository articleAddedRepository;
 
     public void processEvent(Event event) {
-        if (event.getType().equals("USER_ADDED")) {
-            UserAdded userAdded = new UserAdded(UUID.randomUUID().toString(), DateUtils.getDate());
-            userAddedRepository.save(userAdded);
-        }
 
-        else if (event.getType().equals("ARTICLE_ADDED")) {
-            ArticleCreated articleCreated = ArticleCreated.of(event);
-            ArticleAdded articleAdded =
-                    new ArticleAdded(UUID.randomUUID().toString(), DateUtils.getDate(), articleCreated.getUrl(),
-                            articleCreated.getEmail());
-            articleAddedRepository.save(articleAdded);
+        switch (event.getType()) {
+            case "USER_ADDED":
+                onUserAdded();
+                break;
+            case "ARTICLE_ADDED":
+                onArticleAdded(event);
+                break;
         }
+    }
+
+    private void onUserAdded() {
+        UserAdded userAdded = new UserAdded(UUID.randomUUID().toString(), DateUtils.getDate());
+        userAddedRepository.save(userAdded);
+    }
+
+    private void onArticleAdded(Event event) {
+        ArticleCreated articleCreated = ArticleCreated.of(event);
+        ArticleAdded articleAdded =
+                new ArticleAdded(UUID.randomUUID().toString(), DateUtils.getDate(), articleCreated.getUrl(),
+                        articleCreated.getEmail());
+        articleAddedRepository.save(articleAdded);
     }
 }
