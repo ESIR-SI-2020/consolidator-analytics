@@ -10,7 +10,7 @@ public class DateUtils {
     public static Date getDate() {
         LocalDateTime now = LocalDateTime.now();
         Calendar cal = Calendar.getInstance();
-        cal.set(now.getYear(), now.getMonthValue(), now.getDayOfMonth() - 1);
+        cal.set(now.getYear(), now.getMonthValue() - 1, now.getDayOfMonth() - 1);
         return cal.getTime();
     }
 }

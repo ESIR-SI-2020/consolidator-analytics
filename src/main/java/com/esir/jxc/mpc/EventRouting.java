@@ -24,7 +24,7 @@ public class EventRouting {
 
         switch (event.getType()) {
             case "USER_ADDED":
-                onUserAdded();
+                onUserAdded(event);
                 break;
             case "ARTICLE_ADDED":
                 onArticleAdded(event);
@@ -32,15 +32,15 @@ public class EventRouting {
         }
     }
 
-    private void onUserAdded() {
-        UserAdded userAdded = new UserAdded(UUID.randomUUID().toString(), DateUtils.getDate());
+    private void onUserAdded(Event event) {
+        UserAdded userAdded = new UserAdded(event.getId(), DateUtils.getDate());
         userAddedRepository.save(userAdded);
     }
 
     private void onArticleAdded(Event event) {
         ArticleCreated articleCreated = ArticleCreated.of(event);
         ArticleAdded articleAdded =
-                new ArticleAdded(UUID.randomUUID().toString(), DateUtils.getDate(), articleCreated.getUrl(),
+                new ArticleAdded(articleCreated.getId(), DateUtils.getDate(), articleCreated.getUrl(),
                         articleCreated.getEmail());
         articleAddedRepository.save(articleAdded);
     }
